@@ -1,14 +1,19 @@
+import java.awt.*;
 import java.util.Random;
 
 public class CpuPlayer extends Player {
         private Board board;
-        private char symbol;
-        public CpuPlayer(){
-            this.symbol = '1';
+        private String name;
+        public CpuPlayer(Color color){
+            super(color);
+            this.name = "Player 2";
+            this.symbol = 'x';
         }
-        public CpuPlayer(char symbol, Board board){
-            this.symbol=symbol;
+        public CpuPlayer(String name, Board board, Color color){
+            super(color);
+            this.name=name;
             this.board=board;
+            this.symbol = 'x';
         }
     public boolean pickPlace() {
         Random rand = new Random();
@@ -25,4 +30,13 @@ public class CpuPlayer extends Player {
         }
         return false;
     }
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public char getSymbol() {
+        return this.symbol;
+    }
+    public Color getColor(){return this.color;}
 }

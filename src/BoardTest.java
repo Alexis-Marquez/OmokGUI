@@ -2,6 +2,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.HashSet;
 
 import static junit.framework.TestCase.*;
@@ -16,8 +17,8 @@ public class BoardTest {
     @Before
     public void setUp() {
         this.board = new Board(10);
-        player1 = new HumanPlayer("Player 1",'1');
-        player2 = new HumanPlayer("Player 2",'2');
+        player1 = new HumanPlayer("Player 1",'1', Color.BLACK);
+        player2 = new HumanPlayer("Player 2",'2', Color.WHITE);
         }
 
     @After

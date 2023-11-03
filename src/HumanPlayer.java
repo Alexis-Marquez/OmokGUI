@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * A player in an Omok game. It holds the name of the player and
  * can be used to identify a specific player throughout the game.
@@ -8,19 +10,26 @@ public class HumanPlayer extends Player{
 
     /** Name of this player. */
     private final String name;
-    private final char Symbol;
+
 
     /** Create a new player with the given name. */
-    public HumanPlayer(String name) {
-        this.name = name; this.Symbol='1';
+    public HumanPlayer(String name, Color color) {
+        super(color);
+        this.name = name;
+        this.color = color;
+        this.symbol='1';
     }
-    public HumanPlayer(String name, char Symbol) {
-        this.name = name; this.Symbol=Symbol;
+    public HumanPlayer(String name, char Symbol, Color color) {
+        super(color);
+        this.name = name;
+        this.color = color;
+        this.symbol=Symbol;
     }
 
     /** Return the name of this player. */
     public String name() {
         return name;
     }
-    public char getSymbol(){return this.Symbol;}
+    public char getSymbol(){return this.symbol;}
+    public Color getColor(){return this.color;}
 }

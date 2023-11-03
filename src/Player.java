@@ -1,7 +1,14 @@
-public abstract class Player {
-    char symbol;
+import java.awt.*;
 
-    public char getSymbol() {
-        return 0;
+public abstract class Player {
+    protected char symbol;
+    protected Color color;
+
+    protected Player(Color color) {
+        this.color = color;
     }
+
+    public abstract char getSymbol();
+
+    public abstract Color getColor();
 }
