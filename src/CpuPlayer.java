@@ -4,11 +4,6 @@ import java.util.Random;
 public class CpuPlayer extends Player {
         private Board board;
         private String name;
-        public CpuPlayer(Color color){
-            super(color);
-            this.name = "Player 2";
-            this.symbol = 'x';
-        }
         public CpuPlayer(String name, Board board, Color color){
             super(color);
             this.name=name;

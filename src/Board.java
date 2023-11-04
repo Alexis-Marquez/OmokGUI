@@ -8,6 +8,7 @@ public class Board {
     int DEFAULT_SIZE = 15;
     private final char[][] board; //board representation
     protected int size;
+    private boolean won = false;
     protected int x1,x2,y1,y2;
     private final HashSet<Place> winningRow = new HashSet<>();
 
@@ -255,6 +256,14 @@ public class Board {
         }
         System.out.println("//");
         return this.winningRow;
+    }
+
+    public boolean isWin() {
+        return won;
+    }
+
+    public void setWon(boolean won) {
+        this.won = won;
     }
 
 

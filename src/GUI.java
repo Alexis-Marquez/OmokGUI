@@ -55,6 +55,7 @@ public class GUI {
                 }
                 else{
                     board.placeStone(xCord.intValue(),yCord.intValue(),new HumanPlayer("Player 1", Color.BLACK));
+                    System.out.println(board.isWonBy(yCord.intValue(),xCord.intValue(),new HumanPlayer("Player 1", Color.BLACK)));
                     boardDrawing.repaint();
                 }
             }

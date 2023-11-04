@@ -13,12 +13,6 @@ public class HumanPlayer extends Player{
 
 
     /** Create a new player with the given name. */
-    public HumanPlayer(String name, Color color) {
-        super(color);
-        this.name = name;
-        this.color = color;
-        this.symbol='1';
-    }
     public HumanPlayer(String name, char Symbol, Color color) {
         super(color);
         this.name = name;
