@@ -13,7 +13,7 @@ public class GUI {
     JLabel footerText;
     BoardPanel boardDrawing;
 
-    public GUI(Board board) {
+    public GUI(Board board, Game game) {
         this.board = board;
         window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -36,7 +36,6 @@ public class GUI {
         window.add(middlePanel);
         window.add(toolPanel, BorderLayout.NORTH);
         window.add(footer,BorderLayout.SOUTH);
-
         window.setVisible(true);
     }
 
@@ -54,15 +53,10 @@ public class GUI {
                     footerText.setText("Place is Occupied, try another intersection!");
                 }
                 else{
-                    board.placeStone(xCord.intValue(),yCord.intValue(),new HumanPlayer("Player 1", Color.BLACK));
-                    System.out.println(board.isWonBy(yCord.intValue(),xCord.intValue(),new HumanPlayer("Player 1", Color.BLACK)));
+                    board.placeStone(xCord.intValue(),yCord.intValue(),new HumanPlayer("Player 1", '1',Color.BLACK));
+                    System.out.println(board.isWonBy(yCord.intValue(),xCord.intValue(),new HumanPlayer("Player 1", '1', Color.BLACK)));
                     boardDrawing.repaint();
                 }
             }
     };}
-
-
-    public static void main(String[] args) {
-        new GUI(new Board(15));
-    }
 }
