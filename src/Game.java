@@ -30,14 +30,14 @@ public class Game {
 //        do {
 //            numberPlayers = menu.getPlayerNum();
 //        }while(numberPlayers==0);
-        numberPlayers = 2;
+        numberPlayers = 1;
         if(numberPlayers==1){
-            player1 = new HumanPlayer("Player 1", '1',Color.WHITE);
-            player2 = new CpuPlayer("Player 2", this.board,Color.BLACK);
+            player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
+            player2 = new CpuPlayer("Player 2", this.board,Color.WHITE);
         }
         else {
-            player1 = new HumanPlayer("Player 1", '1',Color.WHITE);
-            player2 = new HumanPlayer("Player 2", '2',Color.BLACK);
+            player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
+            player2 = new HumanPlayer("Player 2", '2', Color.WHITE);
         }
         currentTurn = player1;
         GUI gui = new GUI(board, this);

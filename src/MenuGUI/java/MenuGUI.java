@@ -13,6 +13,7 @@ public class MenuGUI {
     private Color color2;
 
     public int getPlayerNum() {
+        return 1;
     }
 
     public Color getColor1() {
