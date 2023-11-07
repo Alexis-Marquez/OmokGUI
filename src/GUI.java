@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class GUI {
     private final Board board;
+    private final Game game;
     JToolBar toolPanel;
     JFrame window;
     JPanel footer;
@@ -15,6 +16,7 @@ public class GUI {
 
     public GUI(Board board, Game game) {
         this.board = board;
+        this.game = game;
         window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(new Dimension(450,500));
@@ -30,7 +32,7 @@ public class GUI {
         this.window.setLayout(new BorderLayout());
         JPanel middlePanel = new JPanel();
         middlePanel.setLayout(new GridBagLayout());
-        boardDrawing = new BoardPanel(this.board);
+        boardDrawing = new BoardPanel(this.board,this.game);
         boardDrawing.addMouseListener(pickPlace());
         middlePanel.add(boardDrawing);
         window.add(middlePanel);
@@ -48,14 +50,28 @@ public class GUI {
                 BigDecimal xCord = x.setScale(0, RoundingMode.HALF_UP);
                 BigDecimal y = BigDecimal.valueOf((double) e.getY() / 25);
                 BigDecimal yCord = y.setScale(0, RoundingMode.HALF_UP);
-                System.out.println(xCord+", "+yCord);
                 if(board.isOccupied(xCord.intValue(),yCord.intValue())){
+                    if(board.isFull()){
+                        footerText.setText("All places full, It's a draw!");
+                    }
                     footerText.setText("Place is Occupied, try another intersection!");
                 }
-                else{
-                    board.placeStone(xCord.intValue(),yCord.intValue(),new HumanPlayer("Player 1", '1',Color.BLACK));
-                    System.out.println(board.isWonBy(yCord.intValue(),xCord.intValue(),new HumanPlayer("Player 1", '1', Color.BLACK)));
-                    boardDrawing.repaint();
+                else {
+                    if (!board.isWin()) {
+                        board.placeStone(xCord.intValue(), yCord.intValue(), game.getCurrentTurn());
+                        board.setWon(board.isWonBy(yCord.intValue(), xCord.intValue(), game.getCurrentTurn()));
+                        if (board.isWin()) {
+                            footerText.setText(game.getCurrentTurn().name + " has Won!");
+                        } else {
+                            game.nextTurn();
+                            footerText.setText(game.getCurrentTurn().name + "'s turn");
+                        }
+                        boardDrawing.repaint();
+                    }
+                    else{
+                        footerText.setText(game.getCurrentTurn().name + " has Won!");
+                        boardDrawing.repaint();
+                    }
                 }
             }
     };}

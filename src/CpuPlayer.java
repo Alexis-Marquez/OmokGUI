@@ -1,29 +1,42 @@
 import java.awt.*;
+import java.util.Objects;
 import java.util.Random;
 
 public class CpuPlayer extends Player {
         private Board board;
-        private String name;
-        public CpuPlayer(String name, Board board, Color color){
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CpuPlayer cpuPlayer = (CpuPlayer) o;
+        return Objects.equals(board, cpuPlayer.board) && Objects.equals(name, cpuPlayer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), board, name);
+    }
+
+    public CpuPlayer(String name, Board board, Color color){
             super(color);
             this.name=name;
             this.board=board;
             this.symbol = 'x';
         }
-    public boolean pickPlace() {
+    public void pickPlace() {
         Random rand = new Random();
         int upperbound = board.size();
         int randX = rand.nextInt(upperbound);
         int randY = rand.nextInt(upperbound);
-        System.out.println(randY+", "+randX);
-        if(board.isOccupied(randX,randY)){
+        if(!board.isOccupied(randX,randY)){
             board.placeStone(randX, randY, this);
-            return true;
+            board.setWon(board.isWonBy(randY, randX, this));
         }
         else{
             this.pickPlace();
         }
-        return false;
     }
     public String getName() {
         return name;

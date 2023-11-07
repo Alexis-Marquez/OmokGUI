@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Objects;
 
 /**
  * A player in an Omok game. It holds the name of the player and
@@ -8,9 +9,20 @@ import java.awt.*;
  */
 public class HumanPlayer extends Player{
 
-    /** Name of this player. */
-    private final String name;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        HumanPlayer that = (HumanPlayer) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name);
+    }
 
     /** Create a new player with the given name. */
     public HumanPlayer(String name, char Symbol, Color color) {

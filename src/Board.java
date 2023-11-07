@@ -115,10 +115,10 @@ public class Board {
      * @param x 0-based column (vertical) index
      * @param y 0-based row (horizontal) index
      */
-    public HumanPlayer playerAt(int x, int y, HumanPlayer player1, HumanPlayer player2) {
-        if(board[x][y]==player1.getSymbol()){
+    public Player playerAt(int x, int y, Player player1, Player player2) {
+        if(board[y][x]==player1.getSymbol()){
             return player1;
-        } else if (board[x][y]==player2.getSymbol()) {
+        } else if (board[y][x]==player2.getSymbol()) {
             return player2;
         }
         else{
@@ -132,7 +132,7 @@ public class Board {
      * sequence of five or more stones placed by the same player in
      * a horizontal, vertical, or diagonal direction.
      */
-    public boolean isWonBy(int y, int x, HumanPlayer player) {
+    public boolean isWonBy(int y, int x, Player player) {
         return searchHorizontal(y,x,player.getSymbol())||searchVertical(y,x,player.getSymbol())||searchDiagonalOne(y,x,player.getSymbol())||searchDiagonalTwo(y,x,player.getSymbol());
     }
     private boolean searchHorizontal(int y, int x, char symbol){

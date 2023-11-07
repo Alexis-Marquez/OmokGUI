@@ -107,7 +107,7 @@ public class BoardTest {
     @Test
     public void TestPlayerAt1() {
         board.placeStone(0,0,player1);
-        HumanPlayer player = board.playerAt(0,0,player1,player2);
+        HumanPlayer player = (HumanPlayer) board.playerAt(0,0,player1,player2);
         assertEquals(player, player1);
     }
     @Test

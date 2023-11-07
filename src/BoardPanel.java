@@ -4,11 +4,12 @@ import java.awt.*;
 
 public class BoardPanel extends JPanel {
     /** Board to be painted. */
-    private  Board board;
-    private int pieceSize = 20;
+    private final Board board;
+    private final Game game;
 
-    public BoardPanel(Board board) {
+    public BoardPanel(Board board, Game game) {
         this.board=board;
+        this.game = game;
         setLayout(new GridLayout(15,15));
         setLayout(new BorderLayout());
         setBorder(new LineBorder(Color.GRAY));
@@ -42,8 +43,10 @@ public class BoardPanel extends JPanel {
         for (int i = 0; i < board.size; i++) {
             for (int j = 0; j < board.size; j++) {
                 if (board.isOccupied(i, j)) {
-                    g.setColor(Color.BLACK);
-                    g.fillOval(25*i-pieceSize/2, 25*j-pieceSize/2, pieceSize, pieceSize);
+                    g.setColor(board.playerAt(i,j, game.player1, game.player2).color);
+                    int pieceSize;
+                    pieceSize = 20;
+                    g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
                 }
             }
         }
