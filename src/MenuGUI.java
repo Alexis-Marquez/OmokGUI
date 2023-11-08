@@ -1,19 +1,25 @@
-package MenuGUI.java;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//Add all the methods for the Menu:
+    // - Ask number of players
+    // - Ask strategy
+    // - Ask for piece color (Optional)
+    //Add fields:
+    // - Number of players
+    // - Strategy
+    // - Color (optional)
+    // Add getters for all fields
 
-public class MenuGUI {
+
+class MenuGUI {
     private Color color1;
     private Color color2;
+    private int playerNum;
 
     public int getPlayerNum() {
-        return 1;
+        return playerNum;
     }
 
     public Color getColor1() {
@@ -23,21 +29,12 @@ public class MenuGUI {
     public Color getColor2() {
         return color2;
     }
-    //Add all the methods for the Menu:
-    // - Ask number of players
-    // - Ask strategy
-    // - Ask for piece color (Optional)
-    //Add fields:
-    // - Number of players
-    // - Strategy
-    // - Color (optional)
-    // Add getters for all fields
-}
+    private Color BROWN = new Color(100, 69, 19);
 
-
-class OmokMenu1 {
-    private static final Color BROWN = new Color(100, 69, 19);
-
+    public JFrame getFrame() {
+        return frame;
+    }
+    private Game game;
     private JFrame frame;
     private JPanel panel;
     private JButton newGameButton;
@@ -46,10 +43,11 @@ class OmokMenu1 {
     private JButton quitButton;
     private JButton strategyButton;
 
-    public OmokMenu1() {
+    public MenuGUI(Game game) {
+        this.game = game;
         frame = new JFrame("Omok");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(450, 500);
 
         panel = new JPanel();
         panel.setLayout(new GridLayout(4, 1));
@@ -64,7 +62,7 @@ class OmokMenu1 {
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectNumberOfPlayers();
+                startNewGame();
             }
         });
 
@@ -106,16 +104,19 @@ class OmokMenu1 {
         frame.setVisible(true);
     }
 
-    private void selectNumberOfPlayers() {
+    private void startNewGame() {
         Object[] options = { "1", "2" };
         int choice = JOptionPane.showOptionDialog(null, "Select Number of Players", "Number of Players",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-
         if (choice == 0) {
-            selectPlayerColor("1");
+            playerNum = 1;
         } else if (choice == 1) {
+            playerNum=2;
             selectPlayerColor("2");
         }
+        panel.setVisible(false);
+        game.init();
+        game.gui.setVisibility(true);
     }
 
     private void selectPlayerColor(String numPlayers) {
@@ -154,7 +155,9 @@ class OmokMenu1 {
         JOptionPane.showMessageDialog(null, rules, "Rules",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
+    public void setVisibility(boolean x){
+        panel.setVisible(x);
+    }
     // private void setMode() {
     // JFrame modeFrame = new JFrame("Select Game Mode");
     // modeFrame.setSize(300, 150);

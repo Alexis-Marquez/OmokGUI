@@ -3,9 +3,20 @@
 import java.awt.*;
 
 public class Game {
+    MenuGUI menu;
+    GUI gui;
     Board board = new Board(16);
     int numberPlayers;
 
+    public boolean isGame() {
+        return game;
+    }
+
+    public void setGame(boolean game) {
+        this.game = game;
+    }
+
+    boolean game;
     public Player getCurrentTurn() {
         return currentTurn;
     }
@@ -26,11 +37,17 @@ public class Game {
     Player player1;
     Player player2;
     public Game(){
-        //MenuGUI menu = new MenuGUI();
-//        do {
-//            numberPlayers = menu.getPlayerNum();
-//        }while(numberPlayers==0);
-        numberPlayers = 1;
+        game = false;
+        menu = new MenuGUI(this);
+        gui = new GUI(board, this, menu.getFrame());
+
+    }
+    public static void main(String[] args) {
+            Game game = new Game();
+        }
+
+    public void init(){
+        numberPlayers = menu.getPlayerNum();
         if(numberPlayers==1){
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
             player2 = new CpuPlayer("Player 2", this.board,Color.WHITE);
@@ -40,14 +57,5 @@ public class Game {
             player2 = new HumanPlayer("Player 2", '2', Color.WHITE);
         }
         currentTurn = player1;
-        GUI gui = new GUI(board, this);
-    }
-    public static void main(String[] args) {
-            new Game();
-        }
-
-    public void playCPU(Board board){
-
-        CpuPlayer cpu = (CpuPlayer) player2;
     }
 }
