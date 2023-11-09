@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 //Add all the methods for the Menu:
     // - Ask number of players
     // - Ask strategy
@@ -34,14 +35,11 @@ class MenuGUI {
     public JFrame getFrame() {
         return frame;
     }
-    private Game game;
-    private JFrame frame;
-    private JPanel panel;
+    private final Game game;
+    private final JFrame frame;
+    private final JPanel panel;
     private JButton newGameButton;
-    private JButton rulesButton;
-    // private JButton setModeButton;
-    private JButton quitButton;
-    private JButton strategyButton;
+    public boolean gameOngoing = false;
 
     public MenuGUI(Game game) {
         this.game = game;
@@ -54,31 +52,34 @@ class MenuGUI {
         panel.setBackground(BROWN);
 
         newGameButton = createStyledButton("Start New Game", Color.BLACK);
-        rulesButton = createStyledButton("Rules", Color.BLACK);
+        JButton rulesButton = createStyledButton("Rules", Color.BLACK);
         // setModeButton = createStyledButton("Set Mode", Color.BLACK);
-        quitButton = createStyledButton("Quit", Color.BLACK);
-        strategyButton = createStyledButton("CPU Strategy", Color.BLACK);
+        // private JButton setModeButton;
+        JButton quitButton = createStyledButton("Quit", Color.BLACK);
+        JButton strategyButton = createStyledButton("CPU Strategy", Color.BLACK);
 
         newGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startNewGame();
+                if(!gameOngoing)startNewGame();
+                else continueGame();
             }
         });
-
+        newGameButton.setMnemonic(KeyEvent.VK_N);
         rulesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 displayRules();
             }
         });
-
+        rulesButton.setMnemonic(KeyEvent.VK_R);
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+        quitButton.setMnemonic(KeyEvent.VK_Q);
 
         // setModeButton.addActionListener(new ActionListener() {
         // @Override
@@ -104,7 +105,7 @@ class MenuGUI {
         frame.setVisible(true);
     }
 
-    private void startNewGame() {
+    public void startNewGame() {
         Object[] options = { "1", "2" };
         int choice = JOptionPane.showOptionDialog(null, "Select Number of Players", "Number of Players",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -112,21 +113,17 @@ class MenuGUI {
             playerNum = 1;
         } else if (choice == 1) {
             playerNum=2;
-            selectPlayerColor("2");
         }
-        panel.setVisible(false);
+        gameOngoing = true;
+        newGameButton.setText("Continue");
         game.init();
+        panel.setVisible(false);
         game.gui.setVisibility(true);
+        game.gui.boardDrawing.repaint();
     }
-
-    private void selectPlayerColor(String numPlayers) {
-        Object[] colorOptions = { "Black", "White" };
-        int choice = JOptionPane.showOptionDialog(null, "Select Your Color (Player " + numPlayers + ")", "Player Color",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, colorOptions, colorOptions[0]);
-
-        String color = (choice == 0) ? "Black" : "White";
-
-        JOptionPane.showMessageDialog(null, "You selected " + color + " as your color (Player " + numPlayers + ").");
+    public void continueGame(){
+        panel.setVisible(false);
+        game.gui.setVisibility(true);
     }
 
     private void selectStrategy() {
@@ -158,46 +155,8 @@ class MenuGUI {
     public void setVisibility(boolean x){
         panel.setVisible(x);
     }
-    // private void setMode() {
-    // JFrame modeFrame = new JFrame("Select Game Mode");
-    // modeFrame.setSize(300, 150);
-    // modeFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    // modeFrame.getContentPane().setBackground(BROWN);
-
-    // JPanel modePanel = new JPanel();
-    // modePanel.setLayout(new GridLayout(1, 3));
-    // modePanel.setBackground(BROWN);
-
-    // JButton easyButton = createStyledButton("Easy", Color.BLACK);
-    // JButton mediumButton = createStyledButton("Medium", Color.BLACK);
-    // JButton hardButton = createStyledButton("Hard", Color.BLACK);
-
-    // easyButton.addActionListener(new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // JOptionPane.showMessageDialog(null, "Easy mode selected.");
-    // modeFrame.dispose();
-    // }
-    // });
-
-    // mediumButton.addActionListener(new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // JOptionPane.showMessageDialog(null, "Medium mode selected.");
-    // modeFrame.dispose();
-    // }
-    // });
-
-    // hardButton.addActionListener(new ActionListener() {
-    // @Override
-    // public void actionPerformed(ActionEvent e) {
-    // JOptionPane.showMessageDialog(null, "Hard mode selected.");
-    // modeFrame.dispose();
-    // }
-    // });
-
-    // modePanel.add(easyButton);modePanel.add(mediumButton);modePanel.add(hardButton);modeFrame.add(modePanel);modeFrame.setVisible(true);
-
-    //
+    public void setButtonText(String text){
+        newGameButton.setText(text);
+    }
 }
 

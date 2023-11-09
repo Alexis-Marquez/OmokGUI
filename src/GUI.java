@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.*;
@@ -11,6 +8,7 @@ public class GUI {
     private final Board board;
     private final Game game;
     JToolBar toolPanel;
+    MenuGUI menu;
     JFrame window;
     JPanel gamePanel;
     JPanel footer;
@@ -23,20 +21,34 @@ public class GUI {
         this.window = window;
         gamePanel = new JPanel();
         gamePanel.setSize(new Dimension(450, 500));
+        JPanel buttons = new JPanel();
         toolPanel = new JToolBar();
         toolPanel.setLayout(new GridLayout(1,3));
         JButton play;
-        play = new JButton("Play");
-        toolPanel.add(play);
-        JButton menu = new JButton("Menu");
-        toolPanel.add(menu);
-        menu.addActionListener(new ActionListener() {
+        play = new JButton("New game");
+        buttons.add(play);
+        JButton goToMenu = new JButton("Menu");
+        buttons.add(goToMenu);
+        buttons.setSize(100,50);
+        toolPanel.add(buttons);
+        goToMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 goBackToMenu();
             }
         });
-
+        play.setIcon(getNormalIcon("src/playButton.jpg"));
+        play.setToolTipText("Play a new game");
+        play.setMnemonic(KeyEvent.VK_N);
+        goToMenu.setIcon(getNormalIcon("src/goBack.jpeg"));
+        goToMenu.setToolTipText("Go back to the main menu");
+        goToMenu.setMnemonic(KeyEvent.VK_M);
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.menu.startNewGame();
+            }
+        });
         footer = new JPanel();
         footerText = new JLabel("Player 1 turn");
         footer.add(footerText);
@@ -50,7 +62,7 @@ public class GUI {
         gamePanel.add(toolPanel, BorderLayout.NORTH);
         gamePanel.add(footer,BorderLayout.SOUTH);
         window.add(gamePanel);
-        window.setVisible(true);
+
     }
 
     private MouseAdapter pickPlace(){
@@ -82,6 +94,8 @@ public class GUI {
                     }
                     else{
                         footerText.setText(game.getCurrentTurn().name + " has Won!");
+                        game.menu.setButtonText("Start New Game");
+                        game.menu.gameOngoing = false;
                         boardDrawing.repaint();
                     }
                 }
@@ -94,5 +108,10 @@ public class GUI {
 
     public void setVisibility(boolean b) {
         gamePanel.setVisible(b);
+    }
+    private Icon getNormalIcon(String path){
+        Image img = new ImageIcon(path).getImage();
+        Image newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
     }
 }

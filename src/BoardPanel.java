@@ -47,6 +47,12 @@ public class BoardPanel extends JPanel {
                     int pieceSize;
                     pieceSize = 20;
                     g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
+                    if(board.isWin()){
+                        if(board.isInWinningRow(i,j)){
+                            g.setColor(Color.red);
+                            g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
+                        }
+                    }
                 }
             }
         }

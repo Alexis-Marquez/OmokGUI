@@ -8,14 +8,6 @@ public class Game {
     Board board = new Board(16);
     int numberPlayers;
 
-    public boolean isGame() {
-        return game;
-    }
-
-    public void setGame(boolean game) {
-        this.game = game;
-    }
-
     boolean game;
     public Player getCurrentTurn() {
         return currentTurn;
@@ -43,10 +35,12 @@ public class Game {
 
     }
     public static void main(String[] args) {
-            Game game = new Game();
+        new Game();
         }
 
     public void init(){
+        board.setWon(false);
+        board.clear();
         numberPlayers = menu.getPlayerNum();
         if(numberPlayers==1){
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);

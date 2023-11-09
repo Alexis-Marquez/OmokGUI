@@ -258,6 +258,10 @@ public class Board {
         return this.winningRow;
     }
 
+    public boolean isInWinningRow(int x, int y){
+        return winningRow.contains(new Place(x,y));
+    }
+
     public boolean isWin() {
         return won;
     }
