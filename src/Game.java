@@ -1,12 +1,14 @@
 //import MenuGUI.java.MenuGUI;
 
 import java.awt.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Game {
     MenuGUI menu;
     GUI gui;
     Board board = new Board(16);
-    int numberPlayers;
+
 
     boolean game;
     public Player getCurrentTurn() {
@@ -38,11 +40,10 @@ public class Game {
         new Game();
         }
 
-    public void init(){
-        board.setWon(false);
+    public void init(int numberPlayers){
+        board.setWon(false, "");
         board.clear();
-        numberPlayers = menu.getPlayerNum();
-        if(numberPlayers==1){
+        if(numberPlayers==0){
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
             player2 = new CpuPlayer("Player 2", this.board,Color.WHITE);
         }
@@ -51,5 +52,36 @@ public class Game {
             player2 = new HumanPlayer("Player 2", '2', Color.WHITE);
         }
         currentTurn = player1;
+        gui.footerText.setText(this.getCurrentTurn().name + "'s turn");
+    }
+    public void pickPlace(int x, int y){
+        BigDecimal xC = BigDecimal.valueOf((double) x / 25);
+        BigDecimal xCord = xC.setScale(0, RoundingMode.HALF_UP);
+        BigDecimal yC = BigDecimal.valueOf((double) y / 25);
+        BigDecimal yCord = yC.setScale(0, RoundingMode.HALF_UP);
+        if (!board.isWin()) {
+        if(board.isOccupied(xCord.intValue(),yCord.intValue())){
+            if(board.isFull()){
+                gui.footerText.setText("All places full, It's a draw!");
+            }
+            gui.footerText.setText("Place is Occupied, try another intersection!");
+        }
+                board.placeStone(xCord.intValue(), yCord.intValue(), this.getCurrentTurn());
+                board.setWon(board.isWonBy(yCord.intValue(), xCord.intValue(), this.getCurrentTurn()), this.getCurrentTurn().name);
+                if (board.isWin()) {
+                    gui.footerText.setText(board.winner + " has Won!");
+                    menu.setButtonText("Start New Game");
+                    menu.gameOngoing = false;
+                } else {
+                    this.nextTurn();
+                    gui.footerText.setText(this.getCurrentTurn().name + "'s turn");
+                }
+                gui.boardDrawing.repaint();
+        }else{
+            gui.footerText.setText(board.winner + " has Won!");
+            menu.setButtonText("Start New Game");
+            menu.gameOngoing = false;
+            gui.boardDrawing.repaint();
+        }
     }
 }

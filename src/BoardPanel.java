@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BoardPanel extends JPanel {
     /** Board to be painted. */
@@ -49,6 +51,10 @@ public class BoardPanel extends JPanel {
                     g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
                     if(board.isWin()){
                         if(board.isInWinningRow(i,j)){
+                            Iterable< Board.Place> winning = board.winningRow();
+                            for(Board.Place b : winning){
+                                System.out.println(b);
+                            }
                             g.setColor(Color.red);
                             g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
                         }

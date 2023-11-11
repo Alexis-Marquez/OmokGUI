@@ -9,6 +9,7 @@ public class Board {
     private final char[][] board; //board representation
     protected int size;
     private boolean won = false;
+    String winner;
     protected int x1,x2,y1,y2;
     private final HashSet<Place> winningRow = new HashSet<>();
 
@@ -263,11 +264,12 @@ public class Board {
     }
 
     public boolean isWin() {
+
         return won;
     }
 
-    public void setWon(boolean won) {
-        this.won = won;
+    public void setWon(boolean won, String name) {
+        this.won = won; this.winner = name;
     }
 
 
@@ -316,6 +318,14 @@ public class Board {
         @Override
         public int hashCode() {
             return Objects.hash(x, y);
+        }
+
+        @Override
+        public String toString() {
+            return "Place{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
         }
     }
 }

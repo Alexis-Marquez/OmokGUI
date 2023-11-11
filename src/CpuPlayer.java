@@ -32,7 +32,7 @@ public class CpuPlayer extends Player {
         int randY = rand.nextInt(upperbound);
         if(!board.isOccupied(randX,randY)){
             board.placeStone(randX, randY, this);
-            board.setWon(board.isWonBy(randY, randX, this));
+            board.setWon(board.isWonBy(randY, randX, this), this.name);
         }
         else{
             this.pickPlace();

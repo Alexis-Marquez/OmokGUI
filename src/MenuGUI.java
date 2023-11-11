@@ -3,33 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-//Add all the methods for the Menu:
-    // - Ask number of players
-    // - Ask strategy
-    // - Ask for piece color (Optional)
-    //Add fields:
-    // - Number of players
-    // - Strategy
-    // - Color (optional)
-    // Add getters for all fields
-
-
 class MenuGUI {
-    private Color color1;
-    private Color color2;
-    private int playerNum;
-
-    public int getPlayerNum() {
-        return playerNum;
-    }
-
-    public Color getColor1() {
-        return color1;
-    }
-
-    public Color getColor2() {
-        return color2;
-    }
     private Color BROWN = new Color(100, 69, 19);
 
     public JFrame getFrame() {
@@ -38,7 +12,7 @@ class MenuGUI {
     private final Game game;
     private final JFrame frame;
     private final JPanel panel;
-    private JButton newGameButton;
+    private final JButton newGameButton;
     public boolean gameOngoing = false;
 
     public MenuGUI(Game game) {
@@ -109,14 +83,10 @@ class MenuGUI {
         Object[] options = { "1", "2" };
         int choice = JOptionPane.showOptionDialog(null, "Select Number of Players", "Number of Players",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-        if (choice == 0) {
-            playerNum = 1;
-        } else if (choice == 1) {
-            playerNum=2;
-        }
+
         gameOngoing = true;
         newGameButton.setText("Continue");
-        game.init();
+        game.init(choice);
         panel.setVisible(false);
         game.gui.setVisibility(true);
         game.gui.boardDrawing.repaint();
