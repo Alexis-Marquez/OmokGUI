@@ -8,7 +8,7 @@ public class Game {
     MenuGUI menu;
     GUI gui;
     Board board = new Board(16);
-
+    String strategy;
 
     boolean game;
     public Player getCurrentTurn() {
@@ -38,7 +38,7 @@ public class Game {
         game = false;
         menu = new MenuGUI(this);
         gui = new GUI(board, this, menu.getFrame());
-
+        this.strategy = "smart";
     }
     public static void main(String[] args) {
         new Game();
@@ -48,8 +48,14 @@ public class Game {
         board.setWon(false, "");
         board.clear();
         if(numberPlayers==0){
-            player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
-            player2 = new CpuPlayerSmart("Player 2", this.board,Color.WHITE, (HumanPlayer) player1);
+            if(strategy.equalsIgnoreCase("random")) {
+                player1 = new HumanPlayer("Player 1", '1', Color.BLACK);
+                player2 = new CpuPlayer("Player 2", this.board, Color.WHITE);
+            }
+            else{
+                player1 = new HumanPlayer("Player 1", '1', Color.BLACK);
+                player2 = new CpuPlayerSmart("Player 2", this.board, Color.WHITE, (HumanPlayer) player1);
+            }
         }
         else {
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);

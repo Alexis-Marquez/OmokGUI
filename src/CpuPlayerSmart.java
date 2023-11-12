@@ -234,7 +234,7 @@ public class CpuPlayerSmart extends Player{
         Board.Place currPlace = null;
         l = x;
         r = x;
-        count = 1;
+        count = 0;
         int currMax = count;
         tries = 0;
         while (tries < 5) {
@@ -252,7 +252,7 @@ public class CpuPlayerSmart extends Player{
                         currPlace = new Board.Place(r, y);
                     }
                 }
-            } else if (r < currBoard.length && currBoard[y][r] == opponent.getSymbol()) {
+            } else if (r < currBoard.length && currBoard[y][r] == this.getSymbol()) {
                 count++;
                 r++;
                 if (r< board.size&&!board.isOccupied(r, y)) {
@@ -273,9 +273,9 @@ public class CpuPlayerSmart extends Player{
         tries = 0;
         u = y;
         d = y;
-        count = 1;
+        count = 0;
         while (tries < 5) {
-            if (u >= 0 && currBoard[u][x] == opponent.getSymbol()) {          //Vertical block
+            if (u >= 0 && currBoard[u][x] == this.getSymbol()) {          //Vertical block
                 count++;
                 u--;
                 if (u>=0&&!board.isOccupied(x, u)) {
@@ -289,7 +289,7 @@ public class CpuPlayerSmart extends Player{
                         currPlace = new Board.Place(x, d);
                     }
                 }
-            } else if (d < currBoard.length && currBoard[d][x] == opponent.getSymbol()) {
+            } else if (d < currBoard.length && currBoard[d][x] == this.getSymbol()) {
                 count++;
                 d++;
                 if (d<board.size&&!board.isOccupied(x, d)) {
@@ -310,10 +310,10 @@ public class CpuPlayerSmart extends Player{
         r = x;
         u = y;
         d = y;
-        count = 1;
+        count = 0;
         tries = 0;
         while (tries < 5) {
-            if (l >= 0 && u >= 0 && currBoard[u][l] == opponent.getSymbol()) {
+            if (l >= 0 && u >= 0 && currBoard[u][l] == this.getSymbol()) {
                 count++;
                 l--;
                 u--;
@@ -328,7 +328,7 @@ public class CpuPlayerSmart extends Player{
                         currPlace = new Board.Place(r, d);
                     }
                 }
-            } else if (r < currBoard.length && d < currBoard.length && currBoard[d][r] == opponent.getSymbol()) {
+            } else if (r < currBoard.length && d < currBoard.length && currBoard[d][r] == this.getSymbol()) {
                 count++;
                 r++;
                 d++;
@@ -350,10 +350,10 @@ public class CpuPlayerSmart extends Player{
         r = x;
         u = y;
         d = y;
-        count = 1;
+        count = 0;
         tries = 0;
         while (tries < 5) {
-            if (l >= 0 && d < currBoard.length && currBoard[d][l] == opponent.getSymbol()) {
+            if (l >= 0 && d < currBoard.length && currBoard[d][l] == this.getSymbol()) {
                 count++;
                 l--;
                 d++;
@@ -368,7 +368,7 @@ public class CpuPlayerSmart extends Player{
                         currPlace = new Board.Place(r, u);
                     }
                 }
-            } else if (r < currBoard.length && u >= 0 && currBoard[u][r] == opponent.getSymbol()) {
+            } else if (r < currBoard.length && u >= 0 && currBoard[u][r] == this.getSymbol()) {
                 count++;
                 r++;
                 u--;
@@ -389,8 +389,7 @@ public class CpuPlayerSmart extends Player{
         if (currPlace == null) {
             int xRand;
             int n = 0;
-            xRand = prevMove.getX()+ThreadLocalRandom.current().nextInt(-1, 1 + 1);
-            int yRand = prevMove.getY()+ThreadLocalRandom.current().nextInt(-1, 1 + 1);
+            int yRand;
             while(true){
                     if (n < 20) {
                         xRand = prevMove.getX() + ThreadLocalRandom.current().nextInt(-1, 1 + 1);
@@ -411,9 +410,6 @@ public class CpuPlayerSmart extends Player{
         } else {
                 return currPlace;
             }
-        }
-        protected int getRand(int min, int max){
-            return min + (int) (Math.random() * ((max - min) + 1));
         }
     public String getName() {
         return name;

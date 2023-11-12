@@ -55,13 +55,6 @@ class MenuGUI {
         });
         quitButton.setMnemonic(KeyEvent.VK_Q);
 
-        // setModeButton.addActionListener(new ActionListener() {
-        // @Override
-        // public void actionPerformed(ActionEvent e) {
-        // setMode();
-        // }
-        // });
-
         strategyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,8 +95,10 @@ class MenuGUI {
                 JOptionPane.QUESTION_MESSAGE, null, strategyOptions, strategyOptions[0]);
 
         String strategy = (choice == 0) ? "Smart" : "Random";
-
+        game.strategy = strategy;
+        gameOngoing = false;
         JOptionPane.showMessageDialog(null, "You selected the " + strategy + " strategy.");
+        newGameButton.setText("New Game");
     }
 
     private JButton createStyledButton(String text, Color textColor) {
