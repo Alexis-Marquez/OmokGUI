@@ -52,9 +52,6 @@ public class BoardPanel extends JPanel {
                     if(board.isWin()){
                         if(board.isInWinningRow(i,j)){
                             Iterable< Board.Place> winning = board.winningRow();
-                            for(Board.Place b : winning){
-                                System.out.println(b);
-                            }
                             g.setColor(Color.red);
                             g.fillOval(25*i- pieceSize /2, 25*j- pieceSize /2, pieceSize, pieceSize);
                         }

@@ -24,6 +24,10 @@ public class Game {
             CpuPlayer cpu = (CpuPlayer) currentTurn;
             cpu.pickPlace();
             nextTurn();
+        } else if (currentTurn.getClass()==CpuPlayerSmart.class) {
+            CpuPlayerSmart cpu = (CpuPlayerSmart) currentTurn;
+            cpu.pickPlace();
+            nextTurn();
         }
     }
 
@@ -45,7 +49,7 @@ public class Game {
         board.clear();
         if(numberPlayers==0){
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
-            player2 = new CpuPlayer("Player 2", this.board,Color.WHITE);
+            player2 = new CpuPlayerSmart("Player 2", this.board,Color.WHITE, (HumanPlayer) player1);
         }
         else {
             player1 = new HumanPlayer("Player 1", '1',Color.BLACK);
@@ -60,12 +64,12 @@ public class Game {
         BigDecimal yC = BigDecimal.valueOf((double) y / 25);
         BigDecimal yCord = yC.setScale(0, RoundingMode.HALF_UP);
         if (!board.isWin()) {
-        if(board.isOccupied(xCord.intValue(),yCord.intValue())){
-            if(board.isFull()){
-                gui.footerText.setText("All places full, It's a draw!");
-            }
-            gui.footerText.setText("Place is Occupied, try another intersection!");
-        }
+            if (board.isOccupied(xCord.intValue(), yCord.intValue())) {
+                if (board.isFull()) {
+                    gui.footerText.setText("All places full, It's a draw!");
+                }
+                gui.footerText.setText("Place is Occupied, try another intersection!");
+            } else {
                 board.placeStone(xCord.intValue(), yCord.intValue(), this.getCurrentTurn());
                 board.setWon(board.isWonBy(yCord.intValue(), xCord.intValue(), this.getCurrentTurn()), this.getCurrentTurn().name);
                 if (board.isWin()) {
@@ -77,6 +81,7 @@ public class Game {
                     gui.footerText.setText(this.getCurrentTurn().name + "'s turn");
                 }
                 gui.boardDrawing.repaint();
+            }
         }else{
             gui.footerText.setText(board.winner + " has Won!");
             menu.setButtonText("Start New Game");

@@ -6,8 +6,19 @@ import java.util.HashSet;
 import java.util.Objects;
 public class Board {
     int DEFAULT_SIZE = 15;
+
+    public char[][] getCurrentBoard() {
+        return board;
+    }
+
     private final char[][] board; //board representation
     protected int size;
+
+    public Place getLastMove() {
+        return lastMove;
+    }
+
+    private Place lastMove;
     private boolean won = false;
     String winner;
     protected int x1,x2,y1,y2;
@@ -73,7 +84,8 @@ public class Board {
      * @param player Player whose stone is to be placed
      */
     public void placeStone(int x, int y, Player player) {
-            board[y][x] = player.getSymbol();
+        lastMove = new Place(x,y);
+        board[y][x] = player.getSymbol();
     }
 
     /**
@@ -158,7 +170,6 @@ public class Board {
                 return false;
             }
         }
-        System.out.println("Winning move: l "+(l+1)+", r "+(r-1)+". Horizontal");
         return true;
     }
     private boolean searchVertical(int y, int x, char symbol){
@@ -183,7 +194,6 @@ public class Board {
                 return false;
             }
         }
-        System.out.println("Winning move: u "+(u+1)+", d "+(d-1)+". vertical");
         return true;
     }
     private boolean searchDiagonalOne(int y, int x, char symbol){
@@ -212,7 +222,6 @@ public class Board {
                 return false;
             }
         }
-        System.out.println("Winning move: l "+(l+1)+", u "+(u+1)+", d "+(d-1)+", r "+(r-1)+". Diagonally");
         return true;
     }
     private boolean searchDiagonalTwo(int y, int x, char symbol){
@@ -241,7 +250,6 @@ public class Board {
                 return false;
             }
         }
-        System.out.println("Winning move: r " + (r-1) + ", u " + (u+1) + ", l " + (l+1) + ", d " + (d-1) + ". Diagonally");
         return true;
     }
 
@@ -252,10 +260,6 @@ public class Board {
         if(this.winningRow.isEmpty()){
             return null;
         }
-        for (Place place : winningRow) {
-            System.out.println(place.getX()+" "+place.getY());
-        }
-        System.out.println("//");
         return this.winningRow;
     }
 
