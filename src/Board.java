@@ -148,7 +148,7 @@ public class Board {
     public boolean isWonBy(int y, int x, Player player) {
         return searchHorizontal(y,x,player.getSymbol())||searchVertical(y,x,player.getSymbol())||searchDiagonalOne(y,x,player.getSymbol())||searchDiagonalTwo(y,x,player.getSymbol());
     }
-    private boolean searchHorizontal(int y, int x, char symbol){
+    private boolean searchHorizontal(int y, int x, char symbol){ // DONT PUT IN DIAGRAM
         int l, r, count;
         l = x-1;
         r = x+1;
@@ -172,7 +172,7 @@ public class Board {
         }
         return true;
     }
-    private boolean searchVertical(int y, int x, char symbol){
+    private boolean searchVertical(int y, int x, char symbol){// DONT PUT IN DIAGRAM
         int u, d, count;
         u = y-1;
         d = y+1;
@@ -196,7 +196,7 @@ public class Board {
         }
         return true;
     }
-    private boolean searchDiagonalOne(int y, int x, char symbol){
+    private boolean searchDiagonalOne(int y, int x, char symbol){// DONT PUT IN DIAGRAM
         int l, r, count, u, d;
         l = x-1;
         r = x+1;
@@ -224,7 +224,7 @@ public class Board {
         }
         return true;
     }
-    private boolean searchDiagonalTwo(int y, int x, char symbol){
+    private boolean searchDiagonalTwo(int y, int x, char symbol){ // DONT PUT IN DIAGRAM
         int l, r, count, u, d;
         l = x-1;
         r = x+1;
